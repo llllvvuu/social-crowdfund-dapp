@@ -1,9 +1,9 @@
 /* eslint no-use-before-define: "warn" */
-const fs = require("fs");
-const chalk = require("chalk");
-const { config, ethers, tenderly, run } = require("hardhat");
-const { utils } = require("ethers");
-const R = require("ramda");
+import fs from "fs";
+import chalk from "chalk";
+import { config, ethers, tenderly, run } from "hardhat";
+import { utils } from "ethers";
+import R from "ramda";
 
 const main = async () => {
 
@@ -137,7 +137,7 @@ const readArgsFile = (contractName) => {
   try {
     const argsFile = `./contracts/${contractName}.args`;
     if (!fs.existsSync(argsFile)) return args;
-    args = JSON.parse(fs.readFileSync(argsFile));
+    args = JSON.parse(fs.readFileSync(argsFile).toString());
   } catch (e) {
     console.log(e);
   }

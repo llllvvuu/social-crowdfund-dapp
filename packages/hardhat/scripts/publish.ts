@@ -1,9 +1,9 @@
-const fs = require("fs");
-const chalk = require("chalk");
-const bre = require("hardhat");
+import fs from "fs";
+import chalk from "chalk";
+import hre from "hardhat";
 
 const publishDir = "../react-app/src/contracts";
-const graphDir = "../subgraph"
+const graphDir = "../subgraph";
 
 function publishContract(contractName) {
   console.log(
@@ -13,13 +13,13 @@ function publishContract(contractName) {
     chalk.gray(publishDir)
   );
   try {
-    let contract = fs
-      .readFileSync(`${bre.config.paths.artifacts}/contracts/${contractName}.sol/${contractName}.json`)
+    const contractArtifact = fs
+      .readFileSync(`${hre.config.paths.artifacts}/contracts/${contractName}.sol/${contractName}.json`)
       .toString();
     const address = fs
-      .readFileSync(`${bre.config.paths.artifacts}/${contractName}.address`)
+      .readFileSync(`${hre.config.paths.artifacts}/${contractName}.address`)
       .toString();
-    contract = JSON.parse(contract);
+    const contract = JSON.parse(contractArtifact);
     let graphConfigPath = `${graphDir}/config/config.json`
     let graphConfig
     try {
@@ -80,7 +80,7 @@ async function main() {
     fs.mkdirSync(publishDir);
   }
   const finalContractList = [];
-  fs.readdirSync(bre.config.paths.sources).forEach((file) => {
+  fs.readdirSync(hre.config.paths.sources).forEach((file) => {
     if (file.indexOf(".sol") >= 0) {
       const contractName = file.replace(".sol", "");
       // Add contract to list if publishing is successful
