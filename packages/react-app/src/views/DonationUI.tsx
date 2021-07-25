@@ -88,7 +88,7 @@ const DonationUI: React.FunctionComponent<DonationUIProps> = (props) => {
                   const result = tx(
                     contract.donate(
                       0,
-                      referrer,
+                      referrer || ethers.constants.AddressZero,
                       { value: ethers.utils.parseUnits(donationAmount, "gwei") },
                     ),
                     (update: any) => {
