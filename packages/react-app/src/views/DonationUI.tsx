@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
-import { Button, Input, Modal, Progress } from "antd";
+import { Button, Divider, Input, Modal, Progress } from "antd";
+import { FacebookOutlined, TwitterOutlined } from "@ant-design/icons";
 import { ethers } from "ethers";
 
 import { useContractReader } from "src/hooks";
@@ -32,7 +33,8 @@ function currency(str: string) {
 const DonationUI: React.FunctionComponent<DonationUIProps> = (props) => {
   const urlParams = new URLSearchParams(window.location.search);
   const referrer = urlParams.get("referrer");
-  const campaignId = urlParams.get("campaignId");
+  // const campaignId = urlParams.get("campaignId");
+  const campaignId = 0;
 
   const { readContracts, contract, tx, address } = props;
   const [donationAmount, setDonationAmount] = React.useState<string>("");
@@ -55,23 +57,24 @@ const DonationUI: React.FunctionComponent<DonationUIProps> = (props) => {
   const referrerRank = referrer && getRank(referrer);
   const myRank = address && getRank(address);
   const twitterLink = `https://twitter.com/intent/tweet?text=https%3A%2F%2Ftribute.desci.pub%2F%3FcampaignId%3D${campaignId}%26referrer%3D${address}`;
+  const fbLink = `https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Ftribute.desci.pub%2F%3FcampaignId%3D${campaignId}%26referrer%3D${address}&amp;src=sdkpreparse`;
 
   const newButton = <Button>Create new campaign</Button>
   const donationBox = (
     <div>
       <div style={{ border: "1px solid #cccccc", padding: 16, width: 400, margin: "auto", marginTop: 64 }}>
-        <h2>Campaign #{Number(campaignId || -1) + 1}</h2>
+        <h2>Qualia Research Institute</h2>
         {referrer && <>
           Referrer: {referrer.slice(0, 10)}...
           <NFTSmall rank={referrerRank} address={referrer} style={{ marginBottom: -5, marginLeft: 5 }} />
         </>}
         {hasGoal && <>
-          <hr />
+          <Divider />
           <h4>Deadline: Block {deadline.length > 20 ? `${Number(deadline).toPrecision(20)}` : `${deadline}`}</h4>
           <h4>${donated} raised of ${goal} goal</h4>
           <Progress percent={100.0 * donated/goal} showInfo={false} />
         </>}
-        <hr />
+        <Divider />
         <div style={{ margin: 8 }}>
           <Input
             onChange={e => {
@@ -117,12 +120,27 @@ const DonationUI: React.FunctionComponent<DonationUIProps> = (props) => {
           <h4>Your contribution: ${yourContribution}</h4>
           <Button onClick={openShare} disabled={!address}>Share</Button>
           <Modal title="Share" visible={shareOpen} footer={null} onCancel={closeShare}>
-            <NFTLarge rank={myRank} address={address || ethers.constants.AddressZero} />
-            <Button href={twitterLink} target="_blank">Tweet</Button>
-            <p>Link: </p><code>{`https://tribute.desci.pub/?campaignId=${campaignId}&referrer=${address}`}</code>
+          <NFTLarge
+            rank={myRank}
+            address={address || ethers.constants.AddressZero}
+            style={{ marginBottom: "1em" }}
+          />
+            <br />
+            <Button
+              type="text"
+              icon={<TwitterOutlined style={{ color: "#1DA1F2", fontSize: "1.5em" }} />}
+              href={twitterLink}
+              target="_blank"
+            />
+            <Button
+              type="text"
+              icon={<FacebookOutlined style={{ color: "#4267B2", fontSize: "1.5em" }} />}
+              href={fbLink}
+              target="_blank"
+            />
           </Modal>
         </div>
-        <hr />
+        <Divider />
         <h3>Referral Leaderboard</h3>
         <table style={{ width: "100%" }}>
           <tr>

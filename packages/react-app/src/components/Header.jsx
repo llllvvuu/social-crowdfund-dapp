@@ -5,10 +5,10 @@ import React from "react";
 
 export default function Header() {
   return (
-    <a href="https://github.com/llwu/viral-crowdfund-dapp" target="_blank" rel="noopener noreferrer">
+    <a href="https://github.com/llwu/social-crowdfund-dapp" target="_blank" rel="noopener noreferrer">
       <PageHeader
         title="Tribute"
-        subTitle="Viral crowdfunding DApp"
+        subTitle="Social crowdfunding DApp"
         style={{ cursor: "pointer" }}
       />
     </a>

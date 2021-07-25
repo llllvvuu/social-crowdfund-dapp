@@ -10,7 +10,7 @@ interface NFTLargeProps {
 
 const NFTLarge: React.FunctionComponent<NFTLargeProps> = (props) => {
   const { style, rank, address } = props;
-  return <NFTSmall rank={rank} address={address} style={{ ...style, width: 472, height: 472 }} />
+  return <NFTSmall rank={rank} address={address} style={{ ...style, width: 250, height: 250 }} />
 }
 
 export default NFTLarge;
